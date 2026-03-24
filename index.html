@@ -3,51 +3,16 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Tienda - Liquidación de Tenis</title>
+<title>Liquidación de Tenis</title>
 
 <style>
-body{
-  font-family:Arial;
-  background:#f5f5f5;
-  margin:0;
-}
-
-.wrap{
-  max-width:1000px;
-  margin:auto;
-  padding:20px;
-}
-
-.card{
-  background:white;
-  padding:15px;
-  border-radius:10px;
-  margin-bottom:15px;
-}
-
-.product{
-  display:flex;
-  gap:15px;
-}
-
-.product img{
-  width:140px;
-  border-radius:10px;
-}
-
-.btn{
-  background:#0b72ff;
-  color:white;
-  border:none;
-  padding:10px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-.cart-item{
-  border-bottom:1px solid #ddd;
-  padding:8px 0;
-}
+body{font-family:Arial;background:#f5f5f5;margin:0}
+.wrap{max-width:1000px;margin:auto;padding:20px}
+.card{background:white;padding:15px;border-radius:10px;margin-bottom:15px}
+.product{display:flex;gap:15px}
+.product img{width:140px;border-radius:10px}
+.btn{background:#0b72ff;color:white;border:none;padding:10px;border-radius:8px;cursor:pointer}
+.cart-item{border-bottom:1px solid #ddd;padding:8px 0}
 </style>
 </head>
 
@@ -91,17 +56,21 @@ body{
 
 <div class="card">
   <h3>🛒 Carrito</h3>
-  <div id="cart"></div>
+  <div id="cart">Carrito vacío</div>
   <p><strong>Total: $<span id="total">0</span></strong></p>
 </div>
 
 <div class="card">
-  <h3>📦 Datos</h3>
-  <input id="name" placeholder="Nombre"><br><br>
-  <input id="phone" placeholder="Teléfono"><br><br>
-  <textarea id="address" placeholder="Dirección"></textarea><br><br>
+  <h3>📦 Datos de pago</h3>
 
-  <button class="btn" onclick="sendWhats()">Enviar pedido por WhatsApp</button>
+  <p><strong>Pago en OXXO / Transferencia:</strong></p>
+  <p>Número: <strong>5101257664722736</strong></p>
+  <p>Banco: NU México</p>
+
+  <p>Después de pagar, envía tu comprobante con tus datos:</p>
+
+  <p><strong>WhatsApp:</strong> +52 722 634 0394</p>
+
 </div>
 
 </div>
@@ -123,7 +92,7 @@ function renderCart(){
   let html = "";
   let total = 0;
 
-  cart.forEach((item,i)=>{
+  cart.forEach((item)=>{
     total += item.qty * item.price;
 
     html += `
@@ -135,30 +104,6 @@ function renderCart(){
 
   document.getElementById("cart").innerHTML = html || "Carrito vacío";
   document.getElementById("total").innerText = total;
-}
-
-function sendWhats(){
-  if(cart.length === 0){
-    alert("Carrito vacío");
-    return;
-  }
-
-  const name = document.getElementById("name").value;
-  const phone = document.getElementById("phone").value;
-  const address = document.getElementById("address").value;
-
-  let message = `Pedido:%0A`;
-
-  cart.forEach(item=>{
-    message += `- ${item.title} Talla ${item.size} x${item.qty}%0A`;
-  });
-
-  message += `%0ATotal: $${document.getElementById("total").innerText}`;
-  message += `%0A%0ANombre: ${name}`;
-  message += `%0ATeléfono: ${phone}`;
-  message += `%0ADirección: ${address}`;
-
-  window.open(`https://wa.me/525544098212?text=${message}`);
 }
 </script>
 
