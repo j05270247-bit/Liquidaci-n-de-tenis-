@@ -13,6 +13,7 @@ body{font-family:Arial;background:#f5f5f5;margin:0}
 .product img{width:140px;border-radius:10px}
 .btn{background:#0b72ff;color:white;border:none;padding:10px;border-radius:8px;cursor:pointer}
 .cart-item{border-bottom:1px solid #ddd;padding:8px 0}
+input, textarea{width:100%;padding:8px;margin-bottom:10px;border-radius:8px;border:1px solid #ccc}
 </style>
 </head>
 
@@ -61,16 +62,24 @@ body{font-family:Arial;background:#f5f5f5;margin:0}
 </div>
 
 <div class="card">
-  <h3>📦 Datos de pago</h3>
+  <h3>📦 Datos del cliente</h3>
+
+  <input id="name" placeholder="Nombre completo">
+  <input id="phone" placeholder="Teléfono">
+  <textarea id="address" placeholder="Dirección completa"></textarea>
+
+</div>
+
+<div class="card">
+  <h3>💳 Pago</h3>
 
   <p><strong>Pago en OXXO / Transferencia:</strong></p>
   <p>Número: <strong>5101257664722736</strong></p>
   <p>Banco: NU México</p>
 
-  <p>Después de pagar, envía tu comprobante con tus datos:</p>
+  <p>Después de pagar, envía tu comprobante dando clic abajo 👇</p>
 
-  <p><strong>WhatsApp:</strong> +52 722 634 0394</p>
-
+  <button class="btn" onclick="sendWhats()">Enviar pedido por WhatsApp</button>
 </div>
 
 </div>
@@ -104,6 +113,37 @@ function renderCart(){
 
   document.getElementById("cart").innerHTML = html || "Carrito vacío";
   document.getElementById("total").innerText = total;
+}
+
+function sendWhats(){
+  if(cart.length === 0){
+    alert("Carrito vacío");
+    return;
+  }
+
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const address = document.getElementById("address").value;
+
+  if(!name || !phone || !address){
+    alert("Completa todos los datos");
+    return;
+  }
+
+  let message = `🛒 *PEDIDO*%0A`;
+
+  cart.forEach(item=>{
+    message += `- ${item.title} Talla ${item.size} x${item.qty}%0A`;
+  });
+
+  message += `%0ATotal: $${document.getElementById("total").innerText}`;
+  message += `%0A%0A👤 Nombre: ${name}`;
+  message += `%0A📞 Teléfono: ${phone}`;
+  message += `%0A📍 Dirección: ${address}`;
+  message += `%0A%0A💳 Pagado a: 5101257664722736 (NU México)`;
+  message += `%0A📸 Enviar comprobante aquí`;
+
+  window.open(`https://wa.me/527226340396?text=${message}`);
 }
 </script>
 
